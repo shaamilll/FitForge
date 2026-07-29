@@ -1,22 +1,57 @@
 @import "tailwindcss";
 
-/* -------------------------------------------------------
-   FitForge Design Tokens
-   Centralizing brand colors, fonts, and theme variables
-   here keeps styling consistent across every component.
-------------------------------------------------------- */
+/* =========================================================
+   FITFORGE — GLOBAL THEME
+   ---------------------------------------------------------
+   This file is the single source of truth for design tokens
+   (colors, fonts, spacing) and base element styling.
+   Every component we build later will pull from these
+   tokens instead of hardcoding hex codes or font names,
+   so the brand stays consistent everywhere.
+========================================================= */
+
+/* ---------------------------------------------------------
+   1. THEME TOKENS
+   Tailwind v4 reads this @theme block and automatically
+   generates utility classes from it. Defining
+   --color-forge-black here means `bg-forge-black`,
+   `text-forge-black`, `border-forge-black` etc. all become
+   available immediately — no config file needed.
+--------------------------------------------------------- */
 @theme {
+  /* Fonts */
   --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  /* Core brand colors
+     Black/white/charcoal give the "premium minimal" base
+     that Nike/Lululemon-style sites are built on. */
   --color-forge-black: #0d0d0f;
   --color-forge-charcoal: #1a1a1d;
   --color-forge-white: #fafafa;
   --color-forge-cream: #f5f3ef;
-  --color-forge-accent: #d4ff3f;
-  --color-forge-accent-dark: #b8e02f;
+
+  /* Accent — a bold energetic orange, used sparingly for CTAs,
+     sale badges, and hover states. This is what gives the
+     site its "fitness brand" energy against the neutral base. */
+  --color-forge-accent: #ff5a1f;
+  --color-forge-accent-dark: #e0480f;
+
+  /* Grays — for secondary text, borders, disabled states */
   --color-forge-gray: #6e6e73;
+  --color-forge-gray-light: #e4e4e7;
+
+  /* Semantic — sale/discount badges, low-stock warnings */
+  --color-forge-sale: #ff4d4d;
+  --color-forge-success: #22c55e;
 }
+
+/* ---------------------------------------------------------
+   2. BASE / GLOBAL ELEMENT STYLES
+   These are unstyled HTML tags. Setting sensible defaults
+   here means every future component starts from a
+   consistent baseline instead of raw browser defaults.
+--------------------------------------------------------- */
 
 html {
   scroll-behavior: smooth;
@@ -26,9 +61,175 @@ body {
   font-family: var(--font-body);
   background-color: var(--color-forge-white);
   color: var(--color-forge-black);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Headings use the display font, bold weight, and tighter
+   letter-spacing — the "confident" look premium brands use
+   for hero titles and section headers. */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-forge-black);
+  line-height: 1.15;
+}
+
+h1 { font-size: 3rem; }        /* 48px */
+h2 { font-size: 2.25rem; }     /* 36px */
+h3 { font-size: 1.5rem; }      /* 24px */
+h4 { font-size: 1.25rem; }     /* 20px */
+
+@media (max-width: 768px) {
+  h1 { font-size: 2.25rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+}
+
+/* Paragraphs default to a softer gray so headings stay the
+   visual anchor and body copy doesn't compete with it. */
+p {
+  color: var(--color-forge-gray);
+  line-height: 1.6;
+}
+
+/* Links: no default browser blue/underline. Every link gets
+   a smooth color transition — this is what makes hovers feel
+   "premium" instead of instant/jumpy. */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-forge-accent-dark);
+}
+
+/* Buttons: strip all default browser chrome (the gray
+   background, border, weird font) so every button we build
+   starts from a blank, fully-controlled slate. */
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  appearance: none;
+}
+
+/* Accessibility: a visible focus ring for keyboard users on
+   both links and buttons. Never remove this without
+   replacing it — invisible focus states fail WCAG. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-forge-accent-dark);
+  outline-offset: 2px;
+}
+
+/* Images: block-level and capped at their container width so
+   nothing ever overflows a card or grid by default. */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------------------------------------------------------
+   3. REUSABLE UTILITY CLASSES
+   Built with Tailwind v4's @utility directive. This means
+   they behave like real Tailwind utilities — they can be
+   combined with variants later (e.g. md:btn-primary) and
+   they respect Tailwind's layer ordering, unlike plain CSS
+   classes bolted on with @layer components in v3.
+--------------------------------------------------------- */
+
+/* Solid black button — the primary "Add to Cart" /
+   "Shop Now" action style. */
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-forge-black);
+  color: var(--color-forge-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+@utility btn-primary {
+  &:hover {
+    background-color: var(--color-forge-charcoal);
+    transform: translateY(-1px);
+  }
+}
+
+/* Orange accent button — reserved for high-priority CTAs like
+   hero banners and promotional sections. Used sparingly. */
+@utility btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-forge-accent);
+  color: var(--color-forge-white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+@utility btn-accent {
+  &:hover {
+    background-color: var(--color-forge-accent-dark);
+    transform: translateY(-1px);
+  }
+}
+
+/* Outline button — secondary actions like "View Details". */
+@utility btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 2rem;
+  background-color: transparent;
+  color: var(--color-forge-black);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  border: 1.5px solid var(--color-forge-black);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@utility btn-outline {
+  &:hover {
+    background-color: var(--color-forge-black);
+    color: var(--color-forge-white);
+  }
+}
+
+/* Page-width wrapper — every section will use this instead
+   of repeating max-width/padding by hand in each component. */
+@utility container-fitforge {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Consistent vertical rhythm between homepage sections. */
+@utility section-padding {
+  padding-block: 4rem;
+
+  @media (min-width: 768px) {
+    padding-block: 6rem;
+  }
 }
