@@ -1,3 +1,4 @@
+import Navbar from "./components/Navbar/Navbar";
 /**
  * App.jsx
  *
@@ -14,10 +15,14 @@
 function App() {
   return (
     <div className="min-h-screen bg-forge-white text-forge-black">
-      <h1 className="font-display text-4xl p-8">
+    <Navbar />
+
+    <main className="p-8">
+      <h1 className="font-display text-4xl">
         FitForge project scaffold ready 🏗️
       </h1>
-    </div>
+    </main>
+  </div>
   )
 }
 
