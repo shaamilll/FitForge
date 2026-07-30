@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
+import Categories from "./components/Categories/Categories";
 
 /**
  * App.jsx
@@ -17,7 +18,8 @@ function App() {
   return (
     <div className="min-h-screen bg-forge-white text-forge-black">
       <Navbar />
-      <Hero />
+<Hero />
+<Categories />
     </div>
   );
 }
