@@ -44,8 +44,8 @@ const imageVariants = {
  * Why it exists:
  * Per the Component Order, Hero comes right after the Navbar. It's
  * job is purely to make a strong first impression and route people
- * toward "Shop Men" or "Shop Women" — no product data or logic lives
- * here, just presentation.
+ * toward the collection via a single primary CTA — no product data
+ * or logic lives here, just presentation.
  */
 const Hero = () => {
   return (
@@ -93,8 +93,9 @@ const Hero = () => {
             variants={itemVariants}
             className="flex flex-wrap items-center gap-4 pt-2"
           >
-            <Button variant="primary">Shop Men</Button>
-            <Button variant="secondary">Shop Women</Button>
+            {/* Single primary CTA. No onClick/href yet — this will be
+                wired to the /shop route once React Router is added. */}
+            <Button variant="primary">Shop Collection</Button>
           </motion.div>
         </motion.div>
 

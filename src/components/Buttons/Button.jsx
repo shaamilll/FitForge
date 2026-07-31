@@ -36,9 +36,10 @@ const Button = ({
   // Secondary = outlined, fills black on hover. Two clear visual
   // hierarchies: "main action" vs "alternate action".
   const variantClasses =
-    variant === "primary"
-      ? "bg-black text-white hover:bg-orange-500"
-      : "bg-transparent text-black border-2 border-black hover:bg-black hover:text-white";
+ 
+  variant === "primary"
+    ? "bg-black text-white hover:bg-orange-500"
+    : "bg-transparent text-black border-2 border-black hover:bg-black hover:text-white";
 
   const classes = `${baseClasses} ${variantClasses}`;
 
