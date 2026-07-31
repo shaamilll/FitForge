@@ -2,6 +2,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Categories from "./components/Categories/Categories";
 import ProductCard from "./components/ProductCard";
+import ProductGrid from "./components/ProductGrid";
+import products from "./constants/products";
 
 /**
  * App.jsx
@@ -21,6 +23,10 @@ function App() {
       <Navbar />
 <Hero />
 <Categories />
+ {/* Temporary ProductGrid test */}
+ <div className="max-w-7xl mx-auto px-6 py-12">
+        <ProductGrid products={products} />
+      </div>
 
     </div>
   );
